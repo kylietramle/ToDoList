@@ -25,6 +25,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     override func viewWillAppear(animated: Bool) { // called everytime view is loaded
         resetAccessoryType() // undo checkmark if screen is switched
+        tableView.reloadData()
     }
     
 
