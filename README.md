@@ -10,7 +10,7 @@ Status: *In development*
 The following features are implemented:
   
 - [x] Allow users to add to do items
-_ [x] Users can delete items by marking them
+- [x] Users can delete items by marking them
 
 ## Video Walkthrough 
 
