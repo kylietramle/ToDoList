@@ -36,34 +36,31 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("ToDoCell", forIndexPath: indexPath)
+        cell.textLabel?.font = UIFont(name: "Noteworthy", size: 24)
         cell.textLabel?.text = toDoList[indexPath.row] as! String
         
         return cell
     }
     
-    // what is this for again?
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
-    }
-    
-    func addToDoItemToList(text:String) {
-        toDoList[toDoList.count] = text // add new entry as the last item in dictionary
-        
-        tableView.reloadData()
-    }
-    
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) { // row that was selected
+    // adds checkmark to selected rows
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true) // no highlight on select
         
         if let cell = tableView.cellForRowAtIndexPath(indexPath) {
-            if cell.accessoryType == .None { // add checkmark
+            if cell.accessoryType == .None {
                 cell.accessoryType = .Checkmark
-                completedToDoList[completedToDoList.count] = toDoList[indexPath.row] as! String
-                toDoList.removeObjectAtIndex(indexPath.row)
                 
             } else {
                 cell.accessoryType = .None
             }
+        }
+    }
+    
+    // swipe to delete
+    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if editingStyle == .Delete {
+            toDoList.removeObjectAtIndex(indexPath.row)
+            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
         }
     }
     
