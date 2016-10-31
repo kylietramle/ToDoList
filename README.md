@@ -9,7 +9,7 @@ The following features are implemented:
   
 - [x] Allow users to add to do items
 - [x] Users can delete items by marking them
-- [x] Empty spaces in text field will not be addedas an item
+- [x] Empty spaces in text field will not be added as an item
 
 ## DEMO
 
