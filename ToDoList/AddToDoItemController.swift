@@ -9,7 +9,7 @@
 import UIKit
 
 protocol AddToDoItemControllerDelegate: class {
-    func addToDoItemToList(text:String)
+    func addItemToList(text:String)
 }
 
 class AddToDoItemController: UIViewController {
@@ -28,8 +28,11 @@ class AddToDoItemController: UIViewController {
     }
 
     @IBAction func saveButtonPressed(sender: AnyObject) {
-        delegate?.addToDoItemToList(toDoItemField.text!)
-        
-        self.dismissViewControllerAnimated(true, completion: nil)
+        if toDoItemField.text!.isEmpty || toDoItemField.text!.characters.first == " " {
+            self.dismissViewControllerAnimated(true, completion: nil)
+        } else {
+            delegate?.addItemToList(toDoItemField.text!)
+            self.dismissViewControllerAnimated(true, completion: nil)
+        }
     }
 }

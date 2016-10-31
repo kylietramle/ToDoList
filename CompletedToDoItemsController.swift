@@ -28,6 +28,7 @@ class CompletedToDoItemsController: UIViewController, UITableViewDataSource, UIT
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("CompletedToDoItemCell", forIndexPath: indexPath)
+        cell.textLabel?.font = UIFont(name: "Noteworthy", size: 24)
         cell.textLabel?.text = completedToDoList[indexPath.row]
         
         return cell

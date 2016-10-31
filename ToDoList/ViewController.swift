@@ -64,6 +64,29 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         }
     }
     
+    // add check-marked item to completed list
+    func addCompletedItems() {
+        for row in 0..<toDoList.count {
+            if let cell = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: row, inSection: 0)) {
+                if cell.accessoryType == .Checkmark {
+                    completedToDoList[completedToDoList.count] = toDoList[row] as? String
+                }
+            }
+        }
+    }
+    
+    // loop thru to-do list in reverse to avoid indexes being out of bounds when remove item
+    func removeToDoItems() {
+        for row in (0...toDoList.count).reverse() {
+            if let cell = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: row, inSection: 0)) {
+                if cell.accessoryType == .Checkmark {
+                    toDoList.removeObjectAtIndex(row)
+                    cell.accessoryType = .None
+                }
+            }
+        }
+    }
+    
     func resetAccessoryType() {
         for row in 0..<toDoList.count {
             // no index path, but have row
@@ -73,7 +96,15 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         }
     }
     
+    func addItemToList(text:String) {
+        toDoList.insertObject(text, atIndex: toDoList.count)
+    }
+
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        addCompletedItems() // add selected item to completed list
+        removeToDoItems() // Removes the selected items after it's added to completed list
+        
         if(segue.identifier == "AddToDoItemSegue") {
             let navigationController = segue.destinationViewController as! UINavigationController // the next controller over
             let addToDoItemViewController = navigationController.topViewController as! AddToDoItemController // get the next controller
@@ -81,8 +112,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             addToDoItemViewController.delegate = self
         } else if(segue.identifier == "CompletedToDoItemsSegue") {
             let completedToDoItemsController = segue.destinationViewController as! CompletedToDoItemsController
-            completedToDoItemsController.completedToDoList = completedToDoList as! [Int:String]
+            completedToDoItemsController.completedToDoList = completedToDoList
         }
     }
-}
 
+}
